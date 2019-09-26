@@ -24,27 +24,98 @@ const catalogue = [
 
 function checkBook(title) {
   if (!title) throw new Error("Please provide a title");
-  // Your code here
+  let result = false;
+  //let i=0;
+  // while(i < catalogue.length){
+  //   const book = title.toLowerCase();
+  //   const cat = catalogue[i].toLowerCase()
+  //   if (cat.includes(book)) {
+  //     result = true;
+  //   }
+  //   i++;
+  // }
+  for (let i = 0; i < catalogue.length; i++) {
+    const book = title.toLowerCase();
+    const cat = catalogue[i].toLowerCase();
+    if (cat.includes(book)) {
+      result = true;
+    }
+  }
+  return result;
 }
 
 function countBooksByKeyword(keyword) {
   if (!keyword) throw new Error("Please provide a keyword");
-  // Your code here
+  let cont = 0;
+  for (let i = 0; i < catalogue.length; i++) {
+    const book = keyword.toLowerCase();
+    const cat = catalogue[i].toLowerCase();
+    if (cat.includes(book)) {
+      cont++;
+    }
+  }
+  return cont;
 }
 
 function getBooksByAuthor(author) {
   if (!author) throw new Error("Please provide an author");
-  // Your code here
-}
+  let count = [];
+  for (let i = 0; i < catalogue.length; i++){
+    if (catalogue[i].includes(author)){
+      let cut = catalogue[i].indexOf(" by")
+      count.push(catalogue[i].slice(0,cut));
+    }
+  }
+  return count;
+ }
 
 function getStockCount(title) {
   if (!title) throw new Error("Please provide a title");
-  // Your code here
+  let regExp = /\(([^)]+)\)/;
+  let num;
+  for (let i = 0; i < catalogue.length; i++) {
+    const book = title.toLowerCase();
+    const cat = catalogue[i].toLowerCase();
+    if (cat.includes(book)) {
+      num = regExp.exec(cat);
+      let quantity = parseInt(num[1]);
+      return quantity;
+    }
+  }
+  return 0;
 }
 
 function stockReview(title) {
   if (!title) throw new Error("Please provide a title");
-  // Your code here
+  let regExp = /\(([^)]+)\)/;
+  let num;
+  for (let i = 0; i < catalogue.length; i++) {
+    const book = title.toLowerCase();
+    const cat = catalogue[i].toLowerCase();
+    if (cat.includes(book)) {
+      num = regExp.exec(cat);
+      let quantity = parseInt(num[1]);
+      if(quantity > 10){
+        return "High Stock";
+      } else if (quantity <= 10 && quantity > 5){
+        return "Medium Stock";
+      } else if (quantity <= 5 && quantity > 0){
+        return "Low Stock";
+      } else {
+        return "Not in Stock";
+      }
+      // switch(quantity){
+      //   case (quantity > 10):
+      //     return "High Strock";
+      //   case quantity <= 10 && quantity > 5:
+      //     return "Medium Stock";
+      //   case quantity <= 5 && quantity > 0:
+      //     return "Low Stock";
+      //   default: 
+      //     return "Not in Stock";
+      // }
+    }
+  }
 }
 
 module.exports = {
